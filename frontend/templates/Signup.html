@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign up</title>
+  <link rel="stylesheet" href="/frontend/static/css/signup.css">
+</head>
+
+<body>
+  <div class="center">
+    <h1>Sign up</h1>
+    <form method="post" id="loginForm">
+      <div class="txt_field">
+        <input type="text" required name="email">
+        <span></span>
+        <label>Email</label>
+      </div>
+      <div class="txt_field">
+        <input type="text" required name="full name">
+        <span></span>
+        <label>Full Name</label>
+      </div>
+      <div class="txt_field">
+        <input type="text" required name="username">
+        <span></span>
+        <label>User Name</label>
+      </div>
+      <div class="txt_field">
+        <input type="password" required name="password">
+        <span></span>
+        <label>Password</label>
+      </div>
+      <input type="submit" value="Sign up">
+      <div class="signup_link">
+        Already have an account? <a href="/frontend/templates/login.html">Login</a>
+      </div>
+    </form>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Evitar el envío del formulario predeterminado
+      var email = document.getElementsByName('email')[0].value;
+      var fullname = document.getElementsByName('full name')[0].value;
+      var username = document.getElementsByName('username')[0].value;
+      var password = document.getElementsByName('password')[0].value;
+      // Construir el objeto de datos a enviar
+      var formData = new FormData();
+      formData.append('email', email);
+      formData.append('fullname', fullname);
+      formData.append('username', username);
+      formData.append('password', password);
+
+      // Realizar la solicitud POST a tu API
+      fetch('http://127.0.0.1:8000/userdb/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'no-cors',
+        body: formData
+      })
+
+        .then(function (response) {
+          console.log(response.status); // Mostrar el código de estado en la consola
+
+          if (response.status === 201) {
+            // El código de estado es 201 (Created), puedes realizar acciones adicionales aquí
+            console.log("Registro exitoso");
+            // Puedes redireccionar a otra página, mostrar un mensaje de éxito, etc.
+          } else {
+            // El código de estado no es 201, manejar el error o mostrar un mensaje de error al usuario
+            console.log("Ocurrió un error durante el registro");
+          }
+
+          return response.text(); // Obtener el contenido de la respuesta como texto
+        })
+        .then(function (result) {
+          console.log(result); // Mostrar la respuesta en la consola
+          // Aquí puedes manejar la respuesta de la API y mostrarla en tu página web
+        })
+        .catch(function (error) {
+          console.error(error);
+          // Manejar errores de la solicitud
+        });
+
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Animated Login Form | CodingNepal</title>
+    <link rel="stylesheet" href="/frontend/static/css/login.css">
+</head>
+
+<body>
+    <div class="center">
+        <h1>Login</h1>
+        <form id="loginForm" method="post">
+            <div class="txt_field">
+                <input type="text" required>
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" required>
+                <span></span>
+                <label>Password</label>
+            </div>
+            <div class="pass">Forgot Password?</div>
+            <input type="submit" value="Login">
+            <div class="signup_link">
+                Not registered? <a href="/frontend/templates/Signup.html">Signup</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evitar el envío del formulario predeterminado
+
+            var username = document.getElementsByName('Username')[0].value;
+            var password = document.getElementsByName('Password')[0].value;
+            console.log(username)
+            console.log(password)
+            // Construir el objeto de datos a enviar
+            var data = {
+                username: username,
+                password: password
+            };
+
+            // Realizar la solicitud POST a tu API
+            fetch('http://127.0.0.1:8000/userdb/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (result) {
+                    // Manejar la respuesta de la API
+                    console.log(result);
+                    // Aquí puedes realizar acciones adicionales, como mostrar un mensaje de éxito o redireccionar a otra página
+                })
+                .catch(function (error) {
+                    // Manejar errores de la solicitud
+                    console.error(error);
+                });
+        });
+
+    </script>
+</body>
+
+</html>
