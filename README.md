@@ -1,3 +1,21 @@
+# CryptoCoinApp
+
+## Descripción
+CryptoCoinApp es una aplicación que te permite registrarte, iniciar sesión y acceder a información en tiempo real sobre precios de criptomonedas. Además, brinda la funcionalidad de seguir tus criptomonedas favoritas para recibir notificaciones por correo electrónico cada vez que su valor suba o baje.
+
+## Características Principales
+- Registro de usuarios: Permite a los usuarios registrarse proporcionando información básica como correo electrónico, nombre de usuario y contraseña.
+- Inicio de sesión: Los usuarios pueden autenticarse en la aplicación utilizando su nombre de usuario y contraseña.
+- Visualización de precios en tiempo real: La aplicación muestra los precios actualizados de una amplia variedad de criptomonedas, proporcionando información como el valor actual, cambios porcentuales y gráficos de rendimiento.
+- Seguimiento de criptomonedas: Los usuarios pueden seleccionar las criptomonedas que desean seguir y recibir notificaciones por correo electrónico cada vez que haya cambios significativos en su valor.
+- Notificaciones por correo electrónico: Cuando el valor de las criptomonedas seguidas por el usuario sube o baja más allá de un umbral establecido, se envía una notificación por correo electrónico con detalles sobre el cambio.
+
+## Tecnologías Utilizadas
+- Frontend: HTML, CSS, JavaScript
+- Backend: Python, FastAPI
+- Base de datos: MongoDB
+- Integración de API: CoinAPI
+
 # API de Gestión de Usuarios y Cryptomonedas
 
 Esta API proporciona funcionalidades para el registro y autenticación de usuarios, así como el manejo de peticiones relacionadas con criptomonedas. Permite realizar operaciones como el registro de nuevos usuarios, inicio de sesión, obtener detalles y valores de criptomonedas, y más. La API admite más de 1000 criptomonedas que existen en el mercado.
@@ -35,10 +53,7 @@ Aquí hay algunos ejemplos de cómo utilizar la API:
 }
 ```
 
-
 2. Inicio de sesión:
-
-
 
 ```python
 "POST /api/userdb/login"
@@ -51,7 +66,6 @@ Aquí hay algunos ejemplos de cómo utilizar la API:
 La respuesta incluirá un token de acceso que se puede utilizar para autenticar solicitudes posteriores.
 
 3. Obtener detalles de una criptomoneda:
-
 
 Reemplaza `{crypto_id}` con el identificador o símbolo de la criptomoneda que deseas consultar.
 
