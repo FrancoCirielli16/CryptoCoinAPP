@@ -24,9 +24,10 @@ Aquí hay algunos ejemplos de cómo utilizar la API:
 
 1. Registro de un nuevo usuario:
 
-POST /api/userdb/register
-```bash
-    {
+
+```python
+"POST /api/userdb/register"
+{
 "email": "usuario@example.com",
 "full_name": "Nombre Completo",
 "username": "nombre_usuario",
@@ -37,8 +38,10 @@ POST /api/userdb/register
 
 2. Inicio de sesión:
 
-POST /api/userdb/login
-```bash
+
+
+```python
+"POST /api/userdb/login"
 {
 "username": "nombre_usuario",
 "password": "contraseña_segura"
