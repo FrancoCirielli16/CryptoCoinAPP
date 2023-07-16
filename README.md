@@ -30,7 +30,7 @@ Esta API proporciona funcionalidades para el registro y autenticación de usuari
 
 ## Documentación
 
-La documentación completa de la API, incluyendo detalles sobre las rutas, parámetros y respuestas, está disponible en [X](COMMING SOON). Puedes explorar la documentación interactiva para comprender mejor cómo utilizar cada endpoint y aprovechar al máximo las funcionalidades de la API.
+La documentación completa de la API, incluyendo detalles sobre las rutas, parámetros y respuestas, está disponible en [X](COMMING). Puedes explorar la documentación interactiva para comprender mejor cómo utilizar cada endpoint y aprovechar al máximo las funcionalidades de la API.
 
 ## Requisitos de Autenticación
 
