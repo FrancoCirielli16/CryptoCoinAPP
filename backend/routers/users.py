@@ -1,3 +1,4 @@
+import os
 from typing import Any
 import bcrypt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -5,15 +6,16 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
-from db.models.user import AdditionalUserDataForm   
+import requests
+from db.models.user import AdditionalUserDataForm
 from db.models.user import User
 from db.client import db_client
 from db.schemas.user import user_schema, users_schema
 from bson import ObjectId
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from keys import SENDGRID_API_KEY,ALGORITHM,ACCESS_TOKEN_DURATION,SECRET
 
-ALGORITHM = "HS256"
-ACCESS_TOKEN_DURATION = 10
-SECRET = "201d573bd7d1344d3a3bfce1550b69102fd11be3db6d379508b6cccc58ea230b"
 
 router = APIRouter(
     tags=["USERS"],
@@ -23,6 +25,37 @@ router = APIRouter(
 oauth2 = OAuth2PasswordBearer(tokenUrl="/userdb/login")
 
 crypt = CryptContext(schemes=["bcrypt"])
+
+
+def sendgrid_register(Email, Fullname):
+    try:
+        message = {
+            "from": {
+                "email":"franco.giovani.cirielli@gmail.com"
+            },
+            "personalizations": [
+                {
+                    "to":[
+                        {
+                            "email": Email,
+                            "name": "Register in CryptControl"
+                        }
+                    ],
+                    "dynamic_template_data":{
+                        "name":Fullname
+                    }
+                }
+            ],
+            "template_id":"d-37a54d8dc659427aaf97b46b61ed4bf3"
+        }
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e)
+
 
 def search_user(field: str, key) -> User:
     """
@@ -41,6 +74,7 @@ def search_user(field: str, key) -> User:
     except:
         return {"error": "No se encontró el usuario"}
 
+
 def search_user_dic(filter: dict[str, Any]) -> User:
     """
     Busca un usuario en la base de datos utilizando un filtro específico.
@@ -56,6 +90,7 @@ def search_user_dic(filter: dict[str, Any]) -> User:
         return User(**user_schema(user))
     except:
         return {"error": "No se encontró el usuario"}
+
 
 async def auth_user(token: str = Depends(oauth2)) -> User:
     """
@@ -102,6 +137,7 @@ async def current_user(user: User = Depends(auth_user)) -> User:
 
 # OPERACIONES GET
 
+
 @router.get("/userdb", response_model=list[User])
 async def users() -> list[User]:
     """
@@ -111,6 +147,7 @@ async def users() -> list[User]:
         list[User]: Lista de objetos User que representa a los usuarios.
     """
     return users_schema(db_client.users.find())
+
 
 @router.get("/userdb/token")
 async def user(user: User = Depends(current_user)) -> User:
@@ -128,6 +165,7 @@ async def user(user: User = Depends(current_user)) -> User:
 # POST
 
 # LOGEAR UN USUARIO
+
 
 @router.post("/userdb/login", status_code=status.HTTP_201_CREATED)
 async def user(form: OAuth2PasswordRequestForm = Depends()) -> dict[str, str]:
@@ -147,7 +185,8 @@ async def user(form: OAuth2PasswordRequestForm = Depends()) -> dict[str, str]:
             detail="El usuario no es correcto"
         )
 
-    password_correct = bcrypt.checkpw(form.password.encode('utf-8'), user_db['password'])
+    password_correct = bcrypt.checkpw(
+        form.password.encode('utf-8'), user_db['password'])
 
     if not password_correct:
         raise HTTPException(
@@ -167,6 +206,7 @@ async def user(form: OAuth2PasswordRequestForm = Depends()) -> dict[str, str]:
 
 # REGISTRAR USUARIO
 
+
 @router.post("/userdb/register", status_code=status.HTTP_201_CREATED)
 async def user(form: OAuth2PasswordRequestForm = Depends(), additional_data: AdditionalUserDataForm = Depends()) -> User:
     """
@@ -182,18 +222,27 @@ async def user(form: OAuth2PasswordRequestForm = Depends(), additional_data: Add
     if type(search_user_dic({"email": additional_data.email})) == User:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="El usuario ya existe"
+            detail="email existente"
+        )
+
+    if type(search_user_dic({"username": form.username})) == User:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="username existente"
         )
 
     user_dict = dict(**form.__dict__, **additional_data.__dict__)
-    user_dict["password"] = bcrypt.hashpw(form.password.encode('utf-8'), bcrypt.gensalt())
+    user_dict["password"] = bcrypt.hashpw(
+        form.password.encode('utf-8'), bcrypt.gensalt())
     id = db_client.users.insert_one(user_dict).inserted_id
-  
+
     new_user = user_schema(db_client.users.find_one({"_id": id}))
-    
+    print(form.username)
+    sendgrid_register(additional_data.email, additional_data.fullname)
     return new_user
 
 # DELETE
+
 
 @router.delete("/userdb", status_code=status.HTTP_204_NO_CONTENT)
 async def user(form: OAuth2PasswordRequestForm = Depends()):
@@ -206,7 +255,8 @@ async def user(form: OAuth2PasswordRequestForm = Depends()):
     Returns:
         dict[str, str]: Diccionario de respuesta con el mensaje de éxito o error.
     """
-    user = search_user_dic({"username": form.username, "password": form.password})
+    user = search_user_dic(
+        {"username": form.username, "password": form.password})
     found = db_client.users.find_one_and_delete({"_id": ObjectId(user.id)})
     if not found:
         return {"error": "No se ha eliminado el usuario"}
