@@ -1,4 +1,3 @@
-import os
 from typing import Any
 import bcrypt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -6,16 +5,14 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
-import requests
 from db.models.user import AdditionalUserDataForm
 from db.models.user import User
 from db.client import db_client
 from db.schemas.user import user_schema, users_schema
 from bson import ObjectId
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 from keys import SENDGRID_API_KEY,ALGORITHM,ACCESS_TOKEN_DURATION,SECRET
-
+from .verificador import generate_verification_link
 
 router = APIRouter(
     tags=["USERS"],
@@ -27,7 +24,10 @@ oauth2 = OAuth2PasswordBearer(tokenUrl="/userdb/login")
 crypt = CryptContext(schemes=["bcrypt"])
 
 
-def sendgrid_register(Email, Fullname):
+##Manda el gmail para el usuario
+def sendgrid_register(id,Email, Fullname):
+    
+    link = generate_verification_link(id)
     try:
         message = {
             "from": {
@@ -42,17 +42,15 @@ def sendgrid_register(Email, Fullname):
                         }
                     ],
                     "dynamic_template_data":{
-                        "name":Fullname
+                        "name":Fullname,    
+                        "link":link
                     }
                 }
             ],
             "template_id":"d-37a54d8dc659427aaf97b46b61ed4bf3"
         }
         sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        sg.send(message)
     except Exception as e:
         print(e)
 
@@ -193,6 +191,14 @@ async def user(form: OAuth2PasswordRequestForm = Depends()) -> dict[str, str]:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="La contraseña no es correcta"
         )
+    
+    if(not user_db["disable"]):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cuenta no verificada"
+        )
+    
+    print(user_db)
 
     access_token = {
         "sub": str(user_db["_id"]),
@@ -230,15 +236,14 @@ async def user(form: OAuth2PasswordRequestForm = Depends(), additional_data: Add
             status_code=status.HTTP_404_NOT_FOUND,
             detail="username existente"
         )
-
-    user_dict = dict(**form.__dict__, **additional_data.__dict__)
+    user_dict = dict(**form.__dict__, **additional_data.__dict__,)
+    user_dict["subs"] = []
     user_dict["password"] = bcrypt.hashpw(
         form.password.encode('utf-8'), bcrypt.gensalt())
     id = db_client.users.insert_one(user_dict).inserted_id
-
     new_user = user_schema(db_client.users.find_one({"_id": id}))
-    print(form.username)
-    sendgrid_register(additional_data.email, additional_data.fullname)
+    print(id)
+    sendgrid_register(id,additional_data.email, additional_data.fullname)
     return new_user
 
 # DELETE

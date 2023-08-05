@@ -1,15 +1,12 @@
 from fastapi import FastAPI
-from fastapi.routing import APIRoute
-from routers import crypto,users
+from routers import crypto, users, verificador
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
-
 app = FastAPI(
+    tags=["ROOT"],
     title="API CRYPTOS-COIN",
     description="Esta API proporciona funcionalidades para el registro y autenticación de usuarios, así como el manejo de peticiones relacionadas con criptomonedas. Permite realizar operaciones como el registro de nuevos usuarios, inicio de sesión, obtener detalles y valores de criptomonedas, y más. La API admite más de 1000 criptomonedas que existen en el mercado. Algunas de las operaciones de la API requieren autenticación mediante un token de acceso. Para obtener el token de acceso, los usuarios deben autenticarse utilizando su nombre de usuario y contraseña a través del endpoint de inicio de sesión. Una vez obtenido el token de acceso, debe ser incluido en el encabezado de autenticación (Authorization: Bearer <token>) en todas las solicitudes autenticadas subsiguientes.",
-    version="1.0.0",
-    tags=["ROOT"]
+    version="1.0.0"
 )
 
 origins = ["*"]
@@ -25,6 +22,8 @@ app.add_middleware(
 
 app.include_router(crypto.router)
 app.include_router(users.router)
+app.include_router(verificador.router)
+
 
 @app.get("/")
 async def root():

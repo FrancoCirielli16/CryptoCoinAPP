@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, status
 from pydantic import BaseModel
 from CoinAPI import get_cryptos
 from db.models.crypto import Crypto

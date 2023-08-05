@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoCoin</title>
+    <style>/* Estilos generales de la página (puedes ajustar según tus necesidades) */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f1f1f1;
+        }
+        
+        /* Estilos de la notificación emergente */
+        .notification {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50; /* Color de fondo */
+            color: #fff; /* Color del texto */
+            padding: 16px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Opcional: Estilos adicionales para estilizar la notificación */
+        /* Puedes ajustar estos estilos según el diseño de tu página */
+        .notification {
+            font-size: 18px;
+        }
+        
+        /* Colores de fondo y texto para diferentes tipos de notificación */
+        /* Puedes agregar más clases para diferentes notificaciones si es necesario */
+        .notification.success {
+            background-color: #4CAF50; /* Verde */
+        }
+        
+        .notification.error {
+            background-color: #f44336; /* Rojo */
+        }
+        
+        .notification.warning {
+            background-color: #ff9800; /* Naranja */
+        }
+        
+        .notification.info {
+            background-color: #2196F3; /* Azul */
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        /* Ajustar el tamaño de la imagen */
+        .tick {
+            width: 150px; /* Ajusta el ancho a tu preferencia */
+            height: auto; /* La altura se ajusta automáticamente para mantener la proporción */
+        }
+        
+        /* Tipografía más atractiva para el título */
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 36px;
+            color: #333; /* Color del texto */
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        /* Estilos para el párrafo */
+        p {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 20px;
+            line-height: 1.6;
+            color: #444; /* Color del texto */
+            margin-bottom: 30px;
+        }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <img class="tick" src="https://img.freepik.com/iconos-gratis/comprobado_318-197857.jpg" alt="Ícono de verificación">
+        <h1>Your account has been verified successfully</h1>
+        <p>You will now be able to log in and use the various functionalities</p>
+    </div>
+</body>
+
+</html>

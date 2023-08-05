@@ -15,6 +15,7 @@ class User(BaseModel):
     fullname:str
     username: str
     email:str
+    subs:list
 
 class UserDB(User):
     password: str
