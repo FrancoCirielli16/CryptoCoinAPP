@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Animated Login Form | CodingNepal</title>
+    <link rel="stylesheet" href="/src/frontend/static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body>
+    <div class="center">
+        <h1>Login</h1>
+        <form id="loginForm" method="post">
+            <div class="txt_field">
+                <input type="text" required name="username">
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" required name="password">
+                <span></span>
+                <label>Password</label>
+            </div>
+            <div class="pass">Forgot Password?</div>
+            <input type="submit" value="Login">
+            <div class="signup_link">
+                Not registered? <a href="/frontend/templates/Signup.html">Signup</a>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
+    </script>
+    <script >
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evitar el envío del formulario predeterminado
+
+            var username = document.getElementsByName('username')[0].value;
+            var password = document.getElementsByName('password')[0].value;
+            console.log(username)
+            console.log(password)
+            // Construir el objeto de datos a enviar
+            var formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
+
+
+            // Realizar la solicitud POST a tu API
+            fetch('https://cryptocontrol-1-k4873642.deta.app/userdb/login', {
+                method: 'POST',
+                body: formData
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+
+                    if ((data.detail === "El usuario no es correcto") || (data.detail === "La contraseña no es correcta")) {
+                        Toastify({
+                            text: "The user or password may be incorrect",
+                            duration: 3000,
+                            position: "center",
+                            offset: {
+                                y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                            },
+                            style: {
+                                background: "linear-gradient(to right, hsl(0, 94%, 39%), #FF0000)",
+                                padding: "1.5rem",
+                            }
+                        }).showToast();
+                        return
+                    }
+
+                    if (data.detail === "Cuenta no verificada") {
+                        Toastify({
+                            text: "Account not verified",
+                            duration: 3000,
+                            position: "center",
+                            offset: {
+                                y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                            },
+                            style: {
+                                background: "linear-gradient(to right, hsl(0, 94%, 39%), #FF0000)",
+                                padding: "1.5rem",
+                            }
+                        }).showToast();
+                        return
+                    }
+
+                    if (data.access_token) {
+                        // fetch('http://127.0.0.1:8000/userdb/token', {
+                        //     method: 'GET',
+                        //     body:data.access_token
+                        // })
+                        //     .then((response) => response.json())
+                        //     .then((data) => { 
+                        //         console.log(data);
+                        //     })
+                        window.location = "index.html";
+
+                    }
+
+                })
+        });
+
+    </script>
+</body>
+
+</html>

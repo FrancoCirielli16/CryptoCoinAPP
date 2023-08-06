@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign up</title>
+  <link rel="stylesheet" href="/src/frontend/static/css/signup.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body>
+  <div class="center">
+    <h1>Sign up</h1>
+    <form method="post" id="loginForm">
+      <div class="txt_field">
+        <input type="text" required name="email">
+        <span></span>
+        <label>Email</label>
+      </div>
+      <div class="txt_field">
+        <input type="text" required name="full name">
+        <span></span>
+        <label>Full Name</label>
+      </div>
+      <div class="txt_field">
+        <input type="text" required name="username">
+        <span></span>
+        <label>User Name</label>
+      </div>
+      <div class="txt_field">
+        <input type="password" required name="password">
+        <span></span>
+        <label>Password</label>
+      </div>
+
+      <input id="btn-abrir-popup" class="btn-abrir-popup" type="submit" value="Sign up">
+      <div class="signup_link">
+        Already have an account? <a href="/frontend/templates/login.html">Login</a>
+      </div>
+    </form>
+  </div>
+  <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+      <img class="tick" src="https://img.freepik.com/iconos-gratis/comprobado_318-197857.jpg" alt="Ícono de verificación">
+      <div class="x-pop"><a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup"><i class="fas fa-times"></i></a>
+      </div>
+      <h3 class="txt_h3">Your account was registered successfully</h3>
+      <h4 class="txt_h4">We will send you an email to check if you have entered your email address correctly.</h4>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
+
+  </script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Evitar el envío del formulario predeterminado
+      var email = document.getElementsByName('email')[0].value;
+      const patron = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!patron.test(email)) {
+        Toastify({
+          text: "Invalid email",
+          duration: 1000,
+          position: "center",
+          offset: {
+            y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          style: {
+            background: "linear-gradient(to right, hsl(0, 94%, 39%), #FF0000)",
+            padding: "1.5rem",
+          }
+        }).showToast();
+        return
+      }
+
+      var password = document.getElementsByName('password')[0].value;
+      const patron_pas = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      if (!patron_pas.test(password)) {
+        Toastify({
+          text: "Invalid password. Min 8 characters | Min 1 uppercase letter | Min 1 number",
+          duration: 4000,
+          position: "center",
+          offset: {
+            y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          style: {
+            background: "linear-gradient(to right, hsl(0, 94%, 39%), #FF0000)",
+            padding: "1.5rem",
+          }
+        }).showToast();
+        return
+
+      }
+
+      var fullname = document.getElementsByName('full name')[0].value;
+      var username = document.getElementsByName('username')[0].value;
+      // Construir el objeto de datos a enviar
+      var formData = new FormData();
+      formData.append('email', email);
+      formData.append('fullname', fullname);
+      formData.append('username', username);
+      formData.append('password', password);
+      var btnAbrirPopup = document.getElementById('btn-abrir-popup'),
+        overlay = document.getElementById('overlay'),
+        popup = document.getElementById('popup'),
+        btnCerrarPopup = document.getElementById('btn-cerrar-popup');
+
+      // Realizar la solicitud POST a tu API
+      fetch('https://cryptocontrol-1-k4873642.deta.app/userdb/register', {
+        method: 'POST',
+        body: formData
+      })
+
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+
+          if (data.detail === "email existente") {
+            Toastify({
+              text: "There is a user with this email address",
+              duration: 3000,
+              position: "center",
+              offset: {
+                y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+              style: {
+                background: "linear-gradient(to right, hsl(0, 94%, 39%), #FF0000)",
+                padding: "1.5rem",
+              }
+            }).showToast();
+            return
+          }
+
+          if (data.detail === "username existente") {
+            Toastify({
+              text: "The username already exists",
+              duration: 3000,
+              position: "center",
+              offset: {
+                y: 50 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+              style: {
+                background: "linear-gradient(to right, hsl(0, 94%, 39%), #FF0000)",
+                padding: "1.5rem",
+              }
+            }).showToast();
+            return
+          }
+
+          if (data.username){
+            overlay.classList.add('active');
+            popup.classList.add('active');
+            btnCerrarPopup.addEventListener('click', function (e) {
+              e.preventDefault();
+              overlay.classList.remove('active');
+              popup.classList.remove('active');
+            });
+            setTimeout(() => window.location = "login.html", 4000)
+          }
+
+        })
+    });
+  </script>
+</body>
+
+</html>

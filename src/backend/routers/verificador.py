@@ -29,7 +29,7 @@ def generate_verification_link(user_id: str):
     db_client.tokens.insert_one(verification_token)
 
     # Generar el enlace de verificación
-    verification_link = f"http://127.0.0.1:8000/verify/?token={token}"
+    verification_link = f"https://cryptocontrol-1-k4873642.deta.app/verify/?token={token}"
 
     return verification_link
 
