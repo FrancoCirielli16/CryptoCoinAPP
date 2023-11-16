@@ -107,7 +107,6 @@ async def auth_user(token: str = Depends(oauth2)) -> User:
     )
     try:
         user_id = jwt.decode(token, SECRET, algorithms=[ALGORITHM]).get("sub")
-        print(user_id)
         if user_id is None:
             raise exception
     except JWTError:

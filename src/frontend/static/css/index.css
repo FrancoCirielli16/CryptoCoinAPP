@@ -1,0 +1,443 @@
+    body {
+        font-family: 'Roboto', sans-serif;
+        user-select: none;
+    }
+
+    #particles-js {
+        height: 100vh;
+        width: 100%;
+
+        position: fixed;
+        z-index: -1;
+    }
+
+
+    .contenedor {
+        width: 90%;
+        padding: 20px, 30px;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1200px;
+        background-position: center;
+        position: relative;
+        z-index: 99;
+    }
+
+    /*SESSION INICIADA*/
+
+    .svg-icon-nav {
+        padding-bottom: 3px;
+        margin-bottom: 14px;
+        vertical-align: middle;
+        
+    }
+
+    .menu-open {
+        display: none;
+    }
+
+    .hamburger {
+        width: 25px;
+        height: 3px;
+        width: width;
+        height: height;
+        background: white;
+        display: block;
+        position: absolute;
+        top: 48%;
+        left: 30%;
+        margin-left: -width/2;
+        margin-top: -height/2;
+        transition: transform 200ms;
+    }
+
+
+    .hamburger-1 {
+        transform: translate3d(0, -8px, 0);
+    }
+
+    .hamburger-2 {
+        transform: translate3d(0, 0, 0);
+    }
+
+    .hamburger-3 {
+        transform: translate3d(0, 8px, 0);
+    }
+
+    .menu-open:checked+.menu-open-button {
+        .hamburger-1 {
+            transform: translate3d(0, 0, 0) rotate(45deg);
+        }
+
+        .hamburger-2 {
+            transform: translate3d(0, 0, 0) scale(0.1, 1);
+        }
+
+        .hamburger-3 {
+            transform: translate3d(0, 0, 0) rotate(-45deg);
+        }
+    }
+
+    .menu {
+
+        width: 650px;
+        height: 150px;
+        position: absolute;
+        margin-left: -80px;
+        padding-top: 20px;
+        padding-left: 80px;
+        width: width;
+        height: height;
+        box-sizing: border-box;
+        font-size: 20px;
+        text-align: left;
+    }
+
+    /* Estilos para los elementos .menu-item */
+    .menu-item {
+        background: #104b01;
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+        margin-left: -20px;
+        /* Ajuste para centrar horizontalmente */
+        position: absolute;
+        top: 40px;
+        color: white;
+        text-align: center;
+        line-height: 74px;
+        /* Igual al height */
+        transform: translate3d(0, 0, 0);
+        transition: transform ease-out 200ms;
+    }
+
+
+    button{
+        cursor: pointer;
+    }
+
+    .button-nav{
+        
+        background:transparent;
+        border: none;
+        margin-right: 1px;
+    }
+
+    .button-nav-singup{
+        padding: auto;
+        background:transparent;
+        border: none;
+        margin-left:5px;
+    }
+
+    .button-nav-avatar{
+        background:transparent;
+        border: none;
+        margin-top: 13px;
+    }
+
+    .button-nav-crypto{
+        background:transparent;
+        border: none;
+        margin-top: 9px;
+    }
+
+    .menu-item:hover {
+        background: #186e03;
+    }
+
+    .menu-open-button {
+        background: rgb(16, 75, 1);
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+        margin-left: -20px;
+        position: absolute;
+        top: 40px;
+        color: white;
+        text-align: center;
+        line-height: 80px;
+        transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+        z-index: 2;
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition-duration: 400ms;
+        cursor: pointer;
+    }
+
+    .menu-open-button:hover {
+        transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+    }
+
+    .menu-open:checked+.menu-open-button {
+        transition-timing-function: linear;
+        transition-duration: 200ms;
+        transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+    }
+
+    .menu-open:checked~.menu-item:nth-child(3) {
+        transition-duration: 180ms;
+        transform: translate3d(70px, 0, 0);
+    }
+
+    .menu-open:checked~.menu-item:nth-child(4) {
+        transition-duration: 280ms;
+        transform: translate3d(150px, 0, 0);
+    }
+
+    .menu-open:checked~.menu-item:nth-child(5) {
+        transition-duration: 380ms;
+        transform: translate3d(230px, 0, 0);
+    }
+
+    /* Agregamos el quinto círculo */
+    .menu-open:checked~.menu-item:nth-child(6) {
+        transition-duration: 480ms;
+        transform: translate3d(310px, 0, 0);
+    }
+
+
+
+
+
+    /* ... and so on for each menu item */
+
+
+    .right-buttons .menu-btn {
+        display: none;
+    }
+
+    /*Pagina    */
+
+    .layout {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        top: 70px;
+        display: grid;
+        grid:
+            "." auto "main" 1fr "footer" auto / 1fr;
+        gap: 8px;
+    }
+
+    .main {
+
+        grid-area: main;
+        width: 100%;
+    }
+
+    .container-gif {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .GIF {
+        width: 12%;
+        height: 12%;
+        padding: 10px;
+        user-select: none;
+    }
+
+
+
+    h1 {
+        font-size: clamp(20px, 4.1vw, 48px);
+        font-weight: bold;
+        color: #2e7419;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 15px;
+        text-shadow: 0px 10px 12px rgba(0, 0, 0, 0.473);
+        line-height: 1.5;
+        letter-spacing: 20px;
+        user-select: none;
+    }
+
+    /* Estilos generales para el contenedor de la barra de búsqueda */
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh;
+        /* Ajustar la altura para centrar verticalmente */
+    }
+
+
+    /* Estilos generales para la barra de búsqueda */
+    .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: #f3f3f3;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 8px 12px;
+        width: 80%;
+    }
+
+    /* Estilos para el icono de búsqueda */
+    .search-icon {
+        margin-right: 8px;
+        color: #333;
+        /* Color del icono */
+    }
+
+    .arrow {
+        width: 40px;
+        top: 50px;
+    }
+
+    /* Estilos para el campo de entrada de búsqueda */
+    .search-input {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 16px;
+        color: #333;
+        /* Color del texto de búsqueda */
+        width: 100%;
+        /* Ancho del campo de entrada */
+    }
+
+    /* Estilos para el botón de búsqueda */
+    .search-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        outline: none;
+        border-radius: 20px;
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    /* Estilos para el botón de búsqueda cuando se coloca el cursor encima */
+    .search-button:hover {
+        background-color: #0056b3;
+        /* Color de fondo del botón al pasar el cursor */
+    }
+
+
+
+    .table-cotainer {
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+        margin: 20px auto;
+        user-select: none;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 70%;
+        height: auto;
+
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    /* Estilos para las filas alternas */
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Estilos para el encabezado de la tabla */
+    th {
+        color: #707A8A;
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+    .names {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .names a {
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+    }
+
+    .crypto-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .crypto-info img {
+        margin-right: 3px;
+        /* Ajusta el espacio entre la imagen y el texto */
+        width: 30px;
+        height: auto;
+    }
+
+    .crypto-info span {
+        font-weight: bold;
+    }
+
+
+    .names span {
+        font-size: 16px;
+        font-weight: 100;
+        padding-left: 5px;
+        color: #707A8A;
+    }
+
+
+    tbody tr {
+        cursor: pointer;
+    }
+
+    tbody tr:hover {
+        background: rgba(148, 148, 148, 0.4);
+    }
+
+    .percentages {
+        color: rgb(3, 166, 109);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .percentages_negative {
+        color: rgb(166, 3, 3);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+
+    #no-results {
+        color: #ff0000; /* Color rojo para resaltar el mensaje */
+        font-size: 16px;
+        width: 25%;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination button {
+        background-color: #2e7419;
+        border: none;
+        color: #ffffff;
+        padding: 8px 16px;
+        border-radius: 5px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .pagination button:hover {
+        background-color: #1e9107;
+    }
+
+    .footer {
+        grid-area: footer;
+        background-color: #043d007a;
+    }

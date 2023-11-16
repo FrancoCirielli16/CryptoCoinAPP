@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/src/frontend/static/css/index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/monzanifabio/cryptofont/cryptofont.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!DOCTYPE html>
+    <title>CryptoControl</title>
+    <html>
+
+    <head>
+
+    </head>
+
+<body>
+    <div id="particles-js"></div>
+    <div class="contenedor">
+        <div class="nav-contenedor">
+            <nav class="menu" id="right-buttons">
+                <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" checked />
+                <label class="menu-open-button" for="menu-open">
+                    <span class="hamburger hamburger-1"></span>
+                    <span class="hamburger hamburger-2"></span>
+                    <span class="hamburger hamburger-3"></span>
+                </label>
+
+                <a class="menu-item" href="home.html"><button class="button-nav-avatar"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
+                            <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2">
+                                <path stroke-dasharray="21" stroke-dashoffset="21" d="M5 21H19">
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="21;0" />
+                                </path>
+                                <path stroke-dasharray="15" stroke-dashoffset="15" d="M5 21V8M19 21V8">
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s" dur="0.2s"
+                                        values="15;0" />
+                                </path>
+                                <path stroke-dasharray="24" stroke-dashoffset="24" d="M9 21V13H15V21">
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s"
+                                        values="24;0" />
+                                </path>
+                                <path stroke-dasharray="26" stroke-dashoffset="26" d="M2 10L12 2L22 10">
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.4s"
+                                        values="26;0" />
+                                </path>
+                            </g>
+                        </svg></button></a>
+
+
+            </nav>
+        </div>
+        <section class="layout">
+            <div class="main">
+                <div class="container-gif">
+                    <div>
+                        <h1>Crypto</h1>
+                    </div>
+                    <img class=GIF src="/src/frontend/bitcoin-05.gif">
+                    <div>
+                        <h1>Control</h1>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <div class="search-bar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="35px" height="35px">
+                            <path
+                                d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z" />
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Search Crypto">
+                        <div id="no-results" style="display: none;">
+                            No cryptos found
+                        </div>
+                        <button id="search-button" class="search-button"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="50" height="24" viewBox="0 0 24 24">
+                                <g transform="translate(24 0) scale(-1 1)">
+                                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2">
+                                        <path stroke-dasharray="20" stroke-dashoffset="20" d="M21 12H3.5">
+                                            <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s"
+                                                values="20;0" />
+                                        </path>
+                                        <path stroke-dasharray="12" stroke-dashoffset="12" d="M3 12L10 19M3 12L10 5">
+                                            <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.3s"
+                                                dur="0.2s" values="12;0" />
+                                        </path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-cotainer">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Coin</th>
+                                <th>Price</th>
+                                <th>1h</th>
+                                <th>24h</th>
+                                <th>Total Volume</th>
+                                <th>Market Cap</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crypto-table-body">
+
+                            <!-- Aquí se generarán dinámicamente las filas de la tabla con los datos de las criptomonedas -->
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="pagination">
+                    <!-- Aquí se mostrará la paginación si es necesario -->
+                </div>
+            </div>
+            <div class="footer">2</div>
+        </section>
+    </div>
+
+    <script>
+
+        //NAV
+
+        const usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        console.log(sessionStorage);
+        console.log(usuario);
+
+        const nav_pr = document.getElementById("right-buttons");
+
+        function LogOut() {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        if (usuario) {
+            fetch('http://127.0.0.1:8000/userdb/token', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${usuario.access_token}`
+                }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+
+
+                    const button_out = document.createElement("a");
+                    button_out.classList.add("menu-item");
+                    button_out.href = "login.html";
+                    const button_o = document.createElement("button");
+                    button_o.classList.add("button-nav");
+                    button_o.addEventListener('click', LogOut);
+                    const svg_button = document.createElement("img");
+                    svg_button.src = "/src/frontend/logOut.svg";
+                    button_o.appendChild(svg_button);
+                    button_out.appendChild(button_o);
+
+                    const button_avatar = document.createElement("a");
+                    button_avatar.classList.add("menu-item");
+                    button_avatar.href = "profile.html";
+                    const button_a = document.createElement("button");
+                    button_a.classList.add("button-nav-avatar")
+                    const svg_avatar = document.createElement("img");
+                    svg_avatar.classList.add("avatar");
+                    svg_avatar.src = "/src/frontend/avatar_icon.svg";
+                    button_a.appendChild(svg_avatar);
+                    button_avatar.appendChild(button_a);
+
+
+
+                    const button_crypto = document.createElement("a");
+                    button_crypto.classList.add("menu-item");
+                    button_crypto.href = "cryptos.html";
+                    const button_c = document.createElement("button");
+                    button_c.classList.add("button-nav-crypto")
+                    const svg_crypto = document.createElement("img");
+                    svg_crypto.classList.add("avatar");
+                    svg_crypto.src = "/src/frontend/crypto-icon.svg";
+                    button_c.appendChild(svg_crypto);
+                    button_crypto.appendChild(button_c);
+
+                    nav_pr.appendChild(button_crypto);
+                    nav_pr.appendChild(button_out);
+                    nav_pr.appendChild(button_avatar);
+                    console.log("True");
+                })
+                .catch((error) => {
+                    console.log(error);
+
+                });
+
+        } else {
+
+            const button_login = document.createElement("a");
+            button_login.classList.add("menu-item");
+            button_login.href = "login.html";
+            const button_l = document.createElement("img");
+            button_l.classList.add("button-nav");
+            button_l.src = "/src/frontend/login-icon.svg";
+            button_login.appendChild(button_l);
+
+            const button_singup = document.createElement("a");
+            button_singup.classList.add("menu-item");
+            button_singup.href = "signup.html";
+            const button_s = document.createElement("img");
+            button_s.classList.add("button-nav-singup");
+            button_s.src = "/src/frontend/register-icon.svg";
+            button_singup.appendChild(button_s);
+
+            nav_pr.appendChild(button_login);
+            nav_pr.appendChild(button_singup);
+
+        }
+
+        //BUSQUEDA
+
+        // Obtén una referencia al botón de búsqueda
+        const searchButton = document.getElementById("search-button");
+
+        // Agrega un evento de escucha al botón de búsqueda
+        // Agrega un evento de escucha al botón de búsqueda
+        searchButton.addEventListener("click", function () {
+            const searchText = document.querySelector(".search-input").value.toLowerCase();
+            const rows = document.querySelectorAll("#crypto-table-body tr");
+            const noResultsMessage = document.getElementById("no-results");
+
+            let anyMatch = false;
+
+            rows.forEach(row => {
+                const coinNameElement = row.querySelector(".crypto-info .name");
+                const coinName = coinNameElement ? coinNameElement.textContent.toLowerCase() : "";
+                const coinSymbol = row.querySelector(".crypto-info .symbol").textContent.toLowerCase();
+
+                if (coinName.includes(searchText) || coinSymbol.includes(searchText)) {
+                    console.log(coinName);
+                    row.style.display = "table-row"; // Restablecer el valor de display
+                    anyMatch = true;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            if (anyMatch) {
+                noResultsMessage.style.display = "none";
+
+            } else {
+                noResultsMessage.style.display = "block";
+                rows.forEach(row => {
+                const coinNameElement = row.querySelector(".crypto-info .name");
+                const coinName = coinNameElement ? coinNameElement.textContent.toLowerCase() : "";
+                const coinSymbol = row.querySelector(".crypto-info .symbol").textContent.toLowerCase();
+
+                row.style.display = "table-row"; // Restablecer el valor de display
+                    
+                
+            });
+            }
+        });
+
+
+
+
+
+        //TABLA
+
+        // Obtener la referencia al tbody de la tabla
+        const tableBody = document.getElementById("crypto-table-body");
+        const excludedNames = ["BNB", "Dai", "XRP", "EOS", "OKB", "USDD", "Flow", "GMX"];
+
+        function redirectToCryptoDetail(symbol) {
+            console.log(symbol);
+            return sessionStorage.setItem('crypto', symbol);
+        }
+
+
+        // Realizar la solicitud a la API y procesar los datos
+        fetch("http://127.0.0.1:8000/cryptos")
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(crypto => {
+                    console.log(crypto);
+                    const anchor = document.createElement("a");
+                    const row = document.createElement("tr");
+                    const contentTd = document.createElement("td");
+                    const contentInfo = document.createElement("div");
+                    const iconCell = document.createElement("img");
+                    const symbolCell = document.createElement("span");
+                    const nameCell = document.createElement("span");
+                    const opciones = { style: 'decimal', useGrouping: true, minimumFractionDigits: 0, maximumFractionDigits: 2, minimumIntegerDigits: 1, maximumIntegerDigits: 10 };
+                    iconCell.src = crypto.image;
+                    iconCell.classList.add("icon-table");
+                    contentInfo.appendChild(iconCell);
+
+                    if (!excludedNames.includes(crypto.name)) {
+                        nameCell.textContent = crypto.name;
+                        nameCell.classList.add("name")
+                        contentInfo.appendChild(nameCell);
+                    }
+
+                    symbolCell.textContent = crypto.symbol.toUpperCase();;
+                    symbolCell.classList.add("symbol")
+                    contentInfo.appendChild(symbolCell);
+                    contentInfo.classList.add("crypto-info");
+                    contentTd.classList.add("names")
+
+                    anchor.addEventListener('click', function () {
+                        redirectToCryptoDetail(crypto.symbol);
+                        window.location.href = 'crypto.html';
+                    });
+
+
+                    anchor.appendChild(contentInfo);
+
+                    contentTd.appendChild(anchor);
+
+                    row.appendChild(contentTd);
+
+                    const price = document.createElement("td");
+                    price.textContent = `$${parseFloat(crypto.price).toLocaleString('en-US',opciones)}`;
+
+                    const porcentaje_1h = document.createElement("td");
+                    porcentaje_1h.textContent = parseFloat(crypto.porcentaje_1h).toFixed(3);
+                    if (crypto.porcentaje_1h < 0) {
+                        porcentaje_1h.classList.add("percentages_negative")
+                    } else { porcentaje_1h.classList.add("percentages") }
+
+
+                    const porcentaje_24h = document.createElement("td");
+                    porcentaje_24h.textContent = parseFloat(crypto.porcentaje_24h).toFixed(3);
+                    porcentaje_24h.classList.add("percentages")
+
+                    if (crypto.porcentaje_24h < 0) {
+                        porcentaje_24h.classList.add("percentages_negative")
+                    } else { porcentaje_24h.classList.add("percentages") }
+
+
+                    const volume = document.createElement("td");
+                    volume.textContent = `$${parseFloat(crypto.volume_24h).toLocaleString('en-US',opciones)}`;
+
+                    const market = document.createElement("td");
+                    market.textContent = `$${parseFloat(crypto.market_cap).toLocaleString('en-US',opciones)}`;
+
+                    row.appendChild(price);
+                    row.appendChild(porcentaje_1h);
+                    row.appendChild(porcentaje_24h);
+                    row.appendChild(volume);
+                    row.appendChild(market);
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
+
+
+
+
+    </script>
+
+    <script src="/src/frontend/static/js/particles.min.js"></script>
+    <script src="/src/frontend/static/js/app.js"></script>
+</body>
+
+</html>

@@ -8,8 +8,6 @@ router = APIRouter(
             responses={status.HTTP_404_NOT_FOUND: {"Message": "No encontrado"}}
         )
 
-
-
 templates = Jinja2Templates(directory="static/templates")
 
 def check_token(token: str = Query(...)):

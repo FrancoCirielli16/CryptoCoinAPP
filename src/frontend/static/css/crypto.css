@@ -1,0 +1,301 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    user-select: none;
+  }
+
+  #particles-js {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: -1;
+  }
+
+
+  .contenedor {
+    width: 90%;
+    padding: 20px, 30px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    background-position: center;
+    position: relative;
+    z-index: 99;
+  }
+
+  /*SESSION INICIADA*/
+
+
+
+  .svg-icon-nav {
+    padding-bottom: 3px;
+    margin-bottom: 14px;
+    vertical-align: middle;
+
+  }
+
+  .menu-open {
+    display: none;
+  }
+
+  .hamburger {
+    width: 25px;
+    height: 3px;
+    width: width;
+    height: height;
+    background: white;
+    display: block;
+    position: absolute;
+    top: 48%;
+    left: 30%;
+    margin-left: -width/2;
+    margin-top: -height/2;
+    transition: transform 200ms;
+  }
+
+
+  .hamburger-1 {
+    transform: translate3d(0, -8px, 0);
+  }
+
+  .hamburger-2 {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .hamburger-3 {
+    transform: translate3d(0, 8px, 0);
+  }
+
+  .menu-open:checked+.menu-open-button {
+    .hamburger-1 {
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+
+    .hamburger-2 {
+      transform: translate3d(0, 0, 0) scale(0.1, 1);
+    }
+
+    .hamburger-3 {
+      transform: translate3d(0, 0, 0) rotate(-45deg);
+    }
+  }
+
+  .menu {
+
+    width: 650px;
+    height: 150px;
+    position: absolute;
+    margin-left: -80px;
+    padding-top: 20px;
+    padding-left: 80px;
+    width: width;
+    height: height;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: left;
+  }
+
+  /* Estilos para los elementos .menu-item */
+  .menu-item {
+    background: #104b01;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    margin-left: -20px;
+    /* Ajuste para centrar horizontalmente */
+    position: absolute;
+    top: 40px;
+    color: white;
+    text-align: center;
+    line-height: 74px;
+    /* Igual al height */
+    transform: translate3d(0, 0, 0);
+    transition: transform ease-out 200ms;
+  }
+
+
+  button {
+    cursor: pointer;
+  }
+
+  .button-nav {
+
+    background: transparent;
+    border: none;
+    margin-left: 2px;
+  }
+
+  .button-nav-singup {
+    padding: auto;
+    background: transparent;
+    border: none;
+    margin-left: 5px;
+  }
+
+  .button-nav-avatar {
+    background: transparent;
+    border: none;
+    margin-top: 13px;
+  }
+
+  .button-nav-crypto {
+    background: transparent;
+    border: none;
+    margin-top: 9px;
+  }
+
+  .menu-item:hover {
+    background: #186e03;
+  }
+
+  .menu-open-button {
+    background: rgb(16, 75, 1);
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    margin-left: -20px;
+    position: absolute;
+    top: 40px;
+    color: white;
+    text-align: center;
+    line-height: 80px;
+    transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+    z-index: 2;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition-duration: 400ms;
+    cursor: pointer;
+  }
+
+  .menu-open-button:hover {
+    transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+  }
+
+  .menu-open:checked+.menu-open-button {
+    transition-timing-function: linear;
+    transition-duration: 200ms;
+    transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+  }
+
+  .menu-open:checked~.menu-item:nth-child(3) {
+    transition-duration: 180ms;
+    transform: translate3d(70px, 0, 0);
+  }
+
+  .menu-open:checked~.menu-item:nth-child(4) {
+    transition-duration: 280ms;
+    transform: translate3d(150px, 0, 0);
+  }
+
+  .menu-open:checked~.menu-item:nth-child(5) {
+    transition-duration: 380ms;
+    transform: translate3d(230px, 0, 0);
+  }
+
+  /* Agregamos el quinto círculo */
+  .menu-open:checked~.menu-item:nth-child(6) {
+    transition-duration: 480ms;
+    transform: translate3d(310px, 0, 0);
+  }
+
+
+  .right-buttons .menu-btn {
+    display: none;
+  }
+
+  /*Pagina    */
+
+  .layout {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid:
+      "." auto "main" 1fr "footer" auto / 1fr;
+    gap: 8px;
+  }
+
+
+  .main {
+    
+    grid-area: main;
+    margin-top: 150px; 
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tradingview-widget-container{
+    width: 100%;
+    height: 100%;
+  }
+ 
+
+
+  .names {
+    display: flex;
+    align-items: center;
+  }
+
+  .crypto-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .crypto-info img {
+    margin-right: 3px;
+    /* Ajusta el espacio entre la imagen y el texto */
+    width: 30px;
+    height: auto;
+  }
+
+  .crypto-info span {
+    font-weight: bold;
+  }
+
+  .crypto-details {
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .symbol{
+    justify-content: center;
+    
+  }
+
+
+  .icon-crypto{
+    width: 40%;
+    height: 40%;
+    
+  }
+
+  .name {
+    font-size: 16px;
+    font-weight: 100;
+    padding-left: 5px;
+    color: #707A8A;
+  }
+
+
+  .percentages {
+    color: rgb(3, 166, 109);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+
+  .percentages_negative {
+    color: rgb(166, 3, 3);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+
+
+  .footer {
+    grid-area: footer;
+    background-color: #043d007a;
+  }

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/monzanifabio/cryptofont/cryptofont.css">
+  <link rel="stylesheet" type="text/css" href="/src/frontend/static/css/crypto.css">
+  <!DOCTYPE html>
+  <title>CryptoControl</title>
+  <style>
+  </style>
+  <html>
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+
+<body>
+
+  <div id="particles-js"></div>
+  <div class="contenedor">
+    <div class="nav-contenedor">
+      <nav class="menu" id="right-buttons">
+        <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" checked />
+        <label class="menu-open-button" for="menu-open">
+          <span class="hamburger hamburger-1"></span>
+          <span class="hamburger hamburger-2"></span>
+          <span class="hamburger hamburger-3"></span>
+        </label>
+
+        <a class="menu-item" href="http://127.0.0.1:5500/src/frontend/templates/home.html"><button
+            class="button-nav-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+              viewBox="0 0 24 24">
+              <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path stroke-dasharray="21" stroke-dashoffset="21" d="M5 21H19">
+                  <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="21;0" />
+                </path>
+                <path stroke-dasharray="15" stroke-dashoffset="15" d="M5 21V8M19 21V8">
+                  <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s" dur="0.2s" values="15;0" />
+                </path>
+                <path stroke-dasharray="24" stroke-dashoffset="24" d="M9 21V13H15V21">
+                  <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="24;0" />
+                </path>
+                <path stroke-dasharray="26" stroke-dashoffset="26" d="M2 10L12 2L22 10">
+                  <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.4s" values="26;0" />
+                </path>
+              </g>
+            </svg></button></a>
+
+
+      </nav>
+    </div>
+    <section class="layout">
+      <div class="main">
+          <div id="crypto-details">
+            <!-- Aquí se construirán dinámicamente los detalles de la criptomoneda -->
+          </div>
+        </div>
+        <div class="footer">2</div>
+    </section>
+  </div>
+  <script>
+
+
+
+
+    // Obtén el símbolo de la criptomoneda de la URL
+    const usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    console.log(sessionStorage)
+    const symbol = sessionStorage.getItem('crypto');
+    const cryptoDetailsContainer = document.getElementById("crypto-details");
+
+
+    // Realizar una solicitud a la API para obtener más detalles de la criptomoneda
+    fetch(`http://127.0.0.1:8000/crypto/${symbol}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Construir el contenido de la página con los datos obtenidos
+        const iconCell = document.createElement("img");
+        iconCell.classList.add("icon-crypto")
+        iconCell.src = data.BTC.image;
+        const symbolCell = document.createElement("span");
+        symbolCell.classList.add("symbol");
+        symbolCell.textContent = data.BTC.symbol;
+        const nameCell = document.createElement("span");
+        nameCell.classList.add("name");
+        nameCell.textContent = data.BTC.name;
+        const price = document.createElement("span");
+        price.classList.add("price");
+        price.textContent = data.BTC.price;
+
+        //   const porcentajes_1h = document.createElement("span");
+        //    porcentajes.textContent = crypto.porcentaje_1h;
+        //   porcentajes_1h.classList.add("percentages")
+
+        //   const porcentaje_24h = document.createElement("span");
+        //  porcentajes.textContent = crypto.porcentaje_24h;
+        //   porcentajes_24h.classList.add("percentages")
+
+        //  const volume = document.createElement("span");
+        //  volume.textContent = crypto.volume_24h;
+
+        //const market = document.createElement("span");
+        //market.textContent = crypto.market_cap;
+        // Limpiar el contenedor antes de agregar los elementos
+        cryptoDetailsContainer.innerHTML = "";
+        cryptoDetailsContainer.appendChild(iconCell);
+        cryptoDetailsContainer.appendChild(symbolCell);
+        cryptoDetailsContainer.appendChild(nameCell);
+        cryptoDetailsContainer.appendChild(price);
+        //cryptoDetailsContainer.appendChild(porcentaje_1h);
+        //cryptoDetailsContainer.appendChild(porcentaje_24h);
+        //cryptoDetailsContainer.appendChild(market);
+        //cryptoDetailsContainer.appendChild(volume);
+      })
+      .catch(error => {
+        console.error("Error fetching crypto details:", error);
+      });
+
+
+    const nav_pr = document.getElementById("right-buttons");
+
+    function LogOut() {
+      sessionStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    if (usuario) {
+      fetch('http://127.0.0.1:8000/userdb/token', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${usuario.access_token}`
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+
+
+          const button_out = document.createElement("a");
+          button_out.classList.add("menu-item");
+          button_out.href = "login.html";
+          const button_o = document.createElement("button");
+          button_o.classList.add("button-nav");
+          button_o.addEventListener('click', LogOut);
+          const svg_button = document.createElement("img");
+          svg_button.src = "/src/frontend/logOut.svg";
+          button_o.appendChild(svg_button);
+          button_out.appendChild(button_o);
+
+          const button_avatar = document.createElement("a");
+          button_avatar.classList.add("menu-item");
+          button_avatar.href = "profile.html";
+          const button_a = document.createElement("button");
+          button_a.classList.add("button-nav-avatar")
+          const svg_avatar = document.createElement("img");
+          svg_avatar.classList.add("avatar");
+          svg_avatar.src = "/src/frontend/avatar_icon.svg";
+          button_a.appendChild(svg_avatar);
+          button_avatar.appendChild(button_a);
+
+
+
+          const button_crypto = document.createElement("a");
+          button_crypto.classList.add("menu-item");
+          button_crypto.href = "cryptos.html";
+          const button_c = document.createElement("button");
+          button_c.classList.add("button-nav-crypto")
+          const svg_crypto = document.createElement("img");
+          svg_crypto.classList.add("avatar");
+          svg_crypto.src = "/src/frontend/crypto-icon.svg";
+          button_c.appendChild(svg_crypto);
+          button_crypto.appendChild(button_c);
+
+          nav_pr.appendChild(button_crypto);
+          nav_pr.appendChild(button_out);
+          nav_pr.appendChild(button_avatar);
+          console.log("True");
+        })
+        .catch((error) => {
+          console.log(error);
+
+        });
+
+    } else {
+
+      const button_login = document.createElement("a");
+      button_login.classList.add("menu-item");
+      button_login.href = "login.html";
+      const button_l = document.createElement("img");
+      button_l.classList.add("button-nav");
+      button_l.src = "/src/frontend/login-icon.svg";
+      button_login.appendChild(button_l);
+
+      const button_singup = document.createElement("a");
+      button_singup.classList.add("menu-item");
+      button_singup.href = "signup.html";
+      const button_s = document.createElement("img");
+      button_s.classList.add("button-nav-singup");
+      button_s.src = "/src/frontend/register-icon.svg";
+      button_singup.appendChild(button_s);
+
+      nav_pr.appendChild(button_login);
+      nav_pr.appendChild(button_singup);
+
+    }
+
+
+  </script>
+  <script src="/src/frontend/static/js/particles.min.js"></script>
+  <script src="/src/frontend/static/js/app.js"></script>
+</body>
+
+</html>
